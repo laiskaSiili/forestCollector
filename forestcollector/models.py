@@ -32,6 +32,10 @@ class StandInformation(models.Model):
         ('ST', 'Stufig')
     )
 
+    lat = models.FloatField(blank=False, null=False, validators=[MinValueValidator(-90), MaxValueValidator(90)])
+    lon = models.FloatField(blank=False, null=False, validators=[MinValueValidator(-180), MaxValueValidator(180)])
+    accuracy = models.FloatField(blank=False, null=False, validators=[MinValueValidator(0)])
+
     entwicklungsstufe = models.CharField(max_length=2, choices=ENTW, help_text='', blank=False, null=False)
     mischungsgrad = models.FloatField(blank=False, null=False, help_text='Mischungsgrad Nadelholz [0-100%]', default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])
     bemerkungen = models.TextField(blank=True, null=True, help_text='')

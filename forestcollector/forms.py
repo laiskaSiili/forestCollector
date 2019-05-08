@@ -17,7 +17,12 @@ class VideoForm(ModelForm):
 class StandInformationForm(ModelForm):
     class Meta:
         model = StandInformation
-        fields= ["entwicklungsstufe", "mischungsgrad", "bemerkungen"]
+        fields= ["lat", "lon", "accuracy", "entwicklungsstufe", "mischungsgrad", "bemerkungen"]
         widgets = {
             'bemerkungen': Textarea(attrs={'rows': 3}),
+        }
+        labels = {
+            "accuracy": "Genauigkeit [m]",
+            "lon": "Längegrad",
+            "lat": "Breitegrad"
         }

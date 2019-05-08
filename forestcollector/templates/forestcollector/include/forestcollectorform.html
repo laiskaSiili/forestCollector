@@ -28,10 +28,21 @@
 </div>
 <div class="row">
     <div class="col-md-6 order-md-2">
-        <h2>Formular</h2>
-
         <form method="POST">
             {% csrf_token %}
+
+            <div class="form-row">
+                <div class="form-group col-md-4 mb-0">
+                    {{ form.lat|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-4 mb-0">
+                    {{ form.lon|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-4 mb-0">
+                    {{ form.accuracy|as_crispy_field }}
+                </div>
+            </div>
+            <hr>
             <div class="form-row">
                 <div class="form-group col-md-6 mb-0">
                     {{ form.entwicklungsstufe|as_crispy_field }}
@@ -51,7 +62,7 @@
     </div>
     <div class="col-md-6 order-md-1">
         <div id="map">
-            <button id="trackBtn" class="btn btn-light">Start tracking</button>
+            <button id="getLocationBtn" class="btn btn-light">Get my current Location</button>
         </div>
     </div>
 </div>
