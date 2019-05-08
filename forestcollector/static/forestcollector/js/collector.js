@@ -73,6 +73,8 @@ function writePositionDataToInputs(latLngAcc) {
   lonInput.value = latLngAcc.lng.toFixed(5);
   if (latLngAcc.accuracy) {
     accuracyInput.value = latLngAcc.accuracy.toFixed(3);
+  } else {
+    accuracyInput.value = '';
   }
 }
 
