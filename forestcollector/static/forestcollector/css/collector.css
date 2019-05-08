@@ -1,0 +1,12 @@
+#map {
+    position: relative;
+    height: 400px;
+    width: 100%;
+}
+
+#trackBtn {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    z-index: 1000;
+}

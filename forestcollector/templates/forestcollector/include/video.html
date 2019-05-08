@@ -1,0 +1,35 @@
+{% extends 'forestcollector/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<!-- styling needed to display error messages for file upload -->
+<style>
+    .invalid-feedback {
+        display: block;
+    }
+</style>
+
+<h1>Video Uploader</h1>
+<form enctype="multipart/form-data" method="POST" action="">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input class="btn btn-primary" type="submit" value="Upload"/>
+</form>
+
+{% if lastvideo %}
+<br>
+<hr>
+<br>
+<h4>{{lastvideo.name}}</h4>
+<video width='400' controls>
+    <source src='{{ MEDIA_URL }}{{ lastvideo.videofile }}' type='video/mp4'>
+    Your browser does not support the video tag.
+</video>
+<br>
+<br>
+
+{% include 'forestcollector/include/sqlqueries.html' %}
+
+{% endif %}
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'forestcollector/base.html' %}
+
+{% block content %}
+
+    <h1>Welcome to section {{section}} of chapter {{chapter}}</h1>
+    <a href="{% url 'chapterContent' chapter=chapter|add:-1 section=section %}">Go to chapter {{chapter|add:-1}}</a>
+    <a href="{% url 'chapterContent' chapter=chapter|add:1 section=section %}">Go to chapter {{chapter|add:1}}</a>
+
+{% endblock %}

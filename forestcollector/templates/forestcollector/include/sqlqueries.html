@@ -1,0 +1,8 @@
+<br>
+<hr>
+<h4>SQL Queries</h4>
+<ol>
+    {% for query in sql_queries %}
+    <li>{{query.sql}} <br><strong>({{query.time}})</strong></li>
+    {% endfor %}
+</ol>

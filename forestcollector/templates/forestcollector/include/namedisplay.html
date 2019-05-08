@@ -1,0 +1,19 @@
+{% extends 'forestcollector/base.html' %}
+
+
+{% block title %}Usernames{% endblock %}
+
+{% block content %}
+    <h1>Hello everyone</h1>
+    {% for person in people %}
+        <p>{{person.name}} ({{person.age}})</p>
+    {% empty %}
+        <p>Nobody has signed up yet!</p>
+    {% endfor %}
+    <a class="btn btn-primary" role="button" href="{% url 'register' %}">I want to be on that list!</a>
+
+    <!--
+        {% include  'forestcollector/include/sqlqueries.html' %}
+    -->
+
+{% endblock %}
