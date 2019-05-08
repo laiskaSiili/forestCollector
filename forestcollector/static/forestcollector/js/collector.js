@@ -10,7 +10,7 @@ class Map {
     this.errorEl = document.getElementById(conf['errorElId']);
     this.initialPosition = conf['initialPosition'];
     this.initialZoom = conf['initialZoom'];
-    this.map = map = L.map(this.mapContainerId).setView(this.initialPosition, this.initialZoom);
+    this.map = L.map(this.mapContainerId).setView(this.initialPosition, this.initialZoom);
     // Set up the Google Satellite layer
     L.tileLayer(
       'http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
