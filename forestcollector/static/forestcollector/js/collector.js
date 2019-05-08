@@ -1,86 +1,112 @@
-// center of the map
-var center = [37.46367, 18.46326];
+'use strict';
 
-// Create the map
-var map = L.map('map').setView(center, 6);
+class Map {
+  constructor(conf) {
+    this.mapContainerId = conf['mapContainerId'];
+    this.errorEl = document.getElementById(conf['errorElId']);
+    this.initialPosition = conf['initialPosition'];
+    this.initialZoom = conf['initialZoom'];
+    this.map = map = L.map(this.mapContainerId).setView(this.initialPosition, this.initialZoom);
+    // Set up the Google Satellite layer
+    L.tileLayer(
+      'http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+        maxZoom: 20,
+        subdomains:['mt0','mt1','mt2','mt3']
+      }).addTo(this.map);
+    // add a marker in the given location
+    this.marker  = L.marker(this.initialPosition);
+    this.marker.addTo(this.map);
+    // Initialize geolocation
+    if (navigator.geolocation) {
+      this.geolocator = navigator.geolocation;
+    } else {
+      this.errorEl.textContent = "Geolocation is not supported!";
+    }
+  }
 
-// Set up the Google Satellite layer
-L.tileLayer(
-  'http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-    maxZoom: 20,
-    subdomains:['mt0','mt1','mt2','mt3']
-  }).addTo(map);
+  flyTo(latLng, zoom) {
+    this.map.flyTo(latLng, zoom);
+  }
 
-// add a marker in the given location
-var marker  = L.marker(center);
-marker.addTo(map);
+  moveMarker(latLng) {
+    this.marker.setLatLng(latLng);
+  }
 
+  getLocation(callback) {
+    this.geolocator.getCurrentPosition(function(position) {
+      callback(position);
+    }, this._showError.bind(this));
+  }
 
-/* -------------------
-  TRACKING
---------------------- */
-var geolocator;
-var tracking = false;
-var trackingInterval;
-var trackbtn = document.getElementById("trackBtn");
-setupGeolocation();
-
-if (!trackbtn.disabled) {
-  trackbtn.addEventListener('click', switchTracking);
-}
-
-function setupGeolocation() {
-  if (navigator.geolocation) {
-    geolocator = navigator.geolocation;
-  } else {
-    trackBtn.textContent = "Geolocation is not supported!";
-    trackBtn.disabled = true;
+  _showError(error) {
+    switch(error.code) {
+      case error.PERMISSION_DENIED:
+        this.errorEl.textContent = "User denied the request for Geolocation."
+        break;
+      case error.POSITION_UNAVAILABLE:
+        this.errorEl.textContent = "Location information is unavailable."
+        break;
+      case error.TIMEOUT:
+        this.errorEl.textContent = "The request to get user location timed out."
+        break;
+      case error.UNKNOWN_ERROR:
+        this.errorEl.textContent = "An unknown error occurred."
+        break;
+    }
   }
 }
 
-function switchTracking() {
-  if (tracking) {
-    trackbtn.textContent = 'Start tracking';
-    trackbtn.classList.remove('btn-warning');
-    trackbtn.classList.add('btn-light');
-    clearInterval(trackingInterval);
-  } else {
-    trackbtn.textContent = 'Tracking...';
-    trackbtn.classList.add('btn-warning');
-    trackbtn.classList.remove('btn-light');
-    locate();
-    trackingInterval = setInterval(locate, 5000);
+/* --------------------
+  ENTRY POINT
+---------------------*/
+
+// instantiate map object
+var mapConf = {
+  'mapContainerId': 'map',
+  'errorElId': 'getLocationBtn',
+  'initialPosition': [37.46367, 6.46326],
+  'initialZoom': 6
+}
+var mapObj = new Map(mapConf);
+
+// get important dom elements
+var latInput = document.getElementById('id_lat');
+var lonInput = document.getElementById('id_lon');
+var accuracyInput = document.getElementById('id_accuracy');
+var getLocationBtn = document.getElementById('getLocationBtn');
+
+// Listen to click events on geolocationbtn to get current location.
+getLocationBtn.addEventListener('click', function(event) {
+  event.stopPropagation();
+  mapObj.getLocation(setPositionToInputs);
+});
+// Listen to click events on map to set clicked location
+mapObj.map.on('click', onMapClick);
+
+function writePositionDataToInputs(latLngAcc) {
+  latInput.value = latLngAcc.lat.toFixed(5);
+  lonInput.value = latLngAcc.lng.toFixed(5);
+  if (latLngAcc.accuracy) {
+    accuracyInput.value = latLngAcc.accuracy.toFixed(3);
   }
-  tracking = !tracking;
 }
 
-function locate() {
-  geolocator.getCurrentPosition(showPosition, showError);
-}
-
-function showPosition(position) {
-  console.log(position);
-  let latLng = {
+function setPositionToInputs(position) {
+  let latLngAcc = {
     lat:position.coords.latitude, 
-    lon:position.coords.longitude
+    lng:position.coords.longitude,
+    accuracy: position.coords.accuracy
   }
-  marker.setLatLng(latLng);
-  map.flyTo(latLng, 18);
+  writePositionDataToInputs(latLngAcc);
+  mapObj.flyTo(latLngAcc, 18);
+  mapObj.moveMarker(latLngAcc);
 }
 
-function showError(error) {
-  switch(error.code) {
-    case error.PERMISSION_DENIED:
-      trackbtn.innerHTML = "User denied the request for Geolocation."
-      break;
-    case error.POSITION_UNAVAILABLE:
-      trackbtn.innerHTML = "Location information is unavailable."
-      break;
-    case error.TIMEOUT:
-      trackbtn.innerHTML = "The request to get user location timed out."
-      break;
-    case error.UNKNOWN_ERROR:
-      trackbtn.innerHTML = "An unknown error occurred."
-      break;
-  }
+function onMapClick(event) {
+  let latLngAcc = event.latlng;
+  latLngAcc['accuracy'] = null;
+  writePositionDataToInputs(latLngAcc);
+  mapObj.moveMarker(latLngAcc);
 }
+
+
