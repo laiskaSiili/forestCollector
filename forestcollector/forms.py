@@ -22,7 +22,7 @@ class StandInformationForm(ModelForm):
             'bemerkungen': Textarea(attrs={'rows': 3}),
         }
         labels = {
-            "accuracy": "Genauigkeit [m]",
+            "accuracy": "Genauigkeit[m]",
             "lon": "Längengrad",
             "lat": "Breitengrad"
         }
