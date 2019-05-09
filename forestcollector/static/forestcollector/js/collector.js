@@ -33,6 +33,10 @@ class Map {
     this.map.flyTo(latLng, zoom);
   }
 
+  setView(latLng, zoom) {
+    this.map.setView(latLng, zoom);
+  }
+
   // move map marker to location.
   moveMarker(latLng) {
     this.marker.setLatLng(latLng);
@@ -79,14 +83,18 @@ function writePositionDataToInputs(latLngAcc) {
 }
 
 // write position (with accuracy) to html input elements, move marker and fly to position.
-function setPositionToInputs(position) {
+function setPositionToInputs(position, fly=true) {
   let latLngAcc = {
     lat:position.coords.latitude, 
     lng:position.coords.longitude,
     accuracy: position.coords.accuracy
   }
   writePositionDataToInputs(latLngAcc);
-  mapObj.flyTo(latLngAcc, 18);
+  if (fly) {
+    mapObj.flyTo(latLngAcc, 18);
+  } else {
+    mapObj.setView(latLngAcc, 18);
+  }
   mapObj.moveMarker(latLngAcc);
 }
 
@@ -107,8 +115,8 @@ function onMapClick(event) {
 var mapConf = {
   'mapContainerId': 'map',
   'errorElId': 'getLocationBtn',
-  'initialPosition': [37.46367, 6.46326],
-  'initialZoom': 6
+  'initialPosition': [0, 0],
+  'initialZoom': 5
 }
 var mapObj = new Map(mapConf);
 
@@ -126,4 +134,7 @@ getLocationBtn.addEventListener('click', function(event) {
 // Listen to click events on map to set clicked location
 mapObj.map.on('click', onMapClick);
 
-
+// Do an initial geolocation request and go to location
+mapObj.getLocation(function(position) {
+  setPositionToInputs(position, false);
+});
