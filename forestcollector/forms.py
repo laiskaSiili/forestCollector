@@ -23,6 +23,6 @@ class StandInformationForm(ModelForm):
         }
         labels = {
             "accuracy": "Genauigkeit[m]",
-            "lon": "Längengrad",
-            "lat": "Breitengrad"
+            "lon": "Längengrad [°]",
+            "lat": "Breitengrad [°]"
         }
