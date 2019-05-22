@@ -138,3 +138,8 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # DEBUG
 #######
 INTERNAL_IPS = ['127.0.0.1']
+
+#######
+# CUSTOM MODEL
+#######
+AUTH_USER_MODEL = 'forestcollector.CustomUser'

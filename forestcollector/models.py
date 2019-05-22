@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator, FileExtensionValidator
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import AbstractUser
 
 
 class Person(models.Model):
@@ -40,3 +41,11 @@ class StandInformation(models.Model):
     mischungsgrad = models.FloatField(blank=False, null=False, help_text='Mischungsgrad Nadelholz [0-100%]', default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])
     bemerkungen = models.TextField(blank=True, null=True, help_text='')
     age = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(0)])
+
+    def __str__(self):
+        return 'Eintrag ' + str(self.pk) + ' - Entwicklungsstufe: ' + str(self.get_entwicklungsstufe_display())
+
+
+class CustomUser(AbstractUser):
+    is_collector = models.BooleanField(default=True)
+

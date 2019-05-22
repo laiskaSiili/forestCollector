@@ -1,8 +1,10 @@
 from django.forms import ModelForm, Textarea
-from .models import Person, Video, StandInformation
+from .models import Person, Video, StandInformation, CustomUser
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Row, Column
+
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 class PersonForm(ModelForm):
     class Meta:
@@ -27,3 +29,17 @@ class StandInformationForm(ModelForm):
             "lon": "Längengrad [°]",
             "lat": "Breitengrad [°]"
         }
+
+
+class CustomUserCreationForm(UserCreationForm):
+
+    class Meta(UserCreationForm):
+        model = CustomUser
+        fields = ('username', 'email', 'is_collector')
+
+
+class CustomUserChangeForm(UserChangeForm):
+
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'email', 'is_collector')

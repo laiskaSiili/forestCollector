@@ -1,7 +1,16 @@
 from django.contrib import admin
-from .models import Person
+from django.contrib.auth.admin import UserAdmin
+from .models import StandInformation, CustomUser
+from .forms import CustomUserCreationForm, CustomUserChangeForm
 
-class PersonAdmin(admin.ModelAdmin):
+class StandInformationAdmin(admin.ModelAdmin):
     pass
-admin.site.register(Person, PersonAdmin)
 
+class CustomUserAdmin(UserAdmin):
+    add_form = CustomUserCreationForm
+    form = CustomUserChangeForm
+    model = CustomUser
+    list_display = ['email', 'username', 'is_collector']
+
+admin.site.register(StandInformation, StandInformationAdmin)
+admin.site.register(CustomUser, CustomUserAdmin)
