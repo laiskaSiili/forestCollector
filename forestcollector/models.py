@@ -39,4 +39,4 @@ class StandInformation(models.Model):
     entwicklungsstufe = models.CharField(max_length=2, choices=ENTW, help_text='', blank=False, null=False)
     mischungsgrad = models.FloatField(blank=False, null=False, help_text='Mischungsgrad Nadelholz [0-100%]', default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])
     bemerkungen = models.TextField(blank=True, null=True, help_text='')
-    alter = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(0)])
+    age = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(0)])
