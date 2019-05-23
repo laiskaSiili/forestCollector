@@ -10,13 +10,13 @@ class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser
-    list_editable = ['username', 'email', 'is_collector']
+    list_editable = ['is_collector']
+    list_display_links = ['username']
     list_display = ['username', 'email', 'is_collector']
-    list_display_links = None
     list_filter = []
     fieldsets = (
         (None, {
-            'fields': ('username', 'email', 'is_collector')
+            'fields': ('username', 'password', 'email', 'is_collector')
         }),
     )
 
