@@ -15,7 +15,7 @@ class CustomUserAdmin(UserAdmin):
     list_display = ['username', 'email', 'is_collector']
     list_filter = []
     fieldsets = (
-        (None, {
+        ('None', {
             'fields': ('username', 'password', 'email', 'is_collector')
         }),
     )

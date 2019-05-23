@@ -11,17 +11,21 @@ import random
 @login_required
 def forest_collector(request):
     context = {}
-    if request.method == "POST":
-        form = StandInformationForm(request.POST)
-        if form.is_valid():
-            StandInformation.objects.create(**form.cleaned_data)
-            return redirect(reverse('forrestcollector'))
-        else:
+    if request.user.is_collector:
+        if request.method == "POST":
+            form = StandInformationForm(request.POST)
+            if form.is_valid():
+                StandInformation.objects.create(**form.cleaned_data)
+                return redirect(reverse('forrestcollector'))
+            else:
+                context["form"] = form
+        elif request.method == "GET":
+            form = StandInformationForm()
             context["form"] = form
-    elif request.method == "GET":
-        form = StandInformationForm()
-        context["form"] = form
-    return render(request, 'forestcollector/include/forestcollectorform.html', context)
+        return render(request, 'forestcollector/include/forestcollectorform.html', context)
+    else:
+        context["stands"] = StandInformation.objects.all()
+        return render(request, 'forestcollector/include/forestcollectorsupervisor.html', context)
 
 
 ########################
