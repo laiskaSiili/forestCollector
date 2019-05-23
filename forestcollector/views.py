@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 from .models import Person, Video, StandInformation
 from .forms import PersonForm, VideoForm, StandInformationForm
 
 import random
 
+@login_required
 def forest_collector(request):
     context = {}
     if request.method == "POST":
