@@ -15,7 +15,10 @@ def forest_collector(request):
         if request.method == "POST":
             form = StandInformationForm(request.POST)
             if form.is_valid():
-                StandInformation.objects.create(**form.cleaned_data)
+                standobj = StandInformation(**form.cleaned_data)
+                standobj.creator = request.user
+                standobj.save()
+                #StandInformation.objects.create(**form.cleaned_data)
                 return redirect(reverse('forrestcollector'))
             else:
                 context["form"] = form

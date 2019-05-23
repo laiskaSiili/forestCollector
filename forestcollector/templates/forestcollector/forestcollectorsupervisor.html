@@ -20,9 +20,11 @@ $(document).ready( function () {
     $('#standTable').DataTable({
       "columns": [
         { "width": "5%" },
-        { "width": "20%" },
-        { "width": "20%" },
-        { "width": "20%" },
+        { "width": "15%" },
+        { "width": "15%" },
+        { "width": "15%" },
+        { "width": "15%" },
+        { "width": "15%" },
       ]
     });
 } );
@@ -46,6 +48,8 @@ $(document).ready( function () {
             <th scope="col">Alter</th>
             <th scope="col">Mischungsgrad</th>
             <th scope="col">Entwicklungsstufe</th>
+            <th scope="col">ErfasserIn</th>
+            <th scope="col">Datum</th>
           </tr>
         </thead>
         <tbody>
@@ -55,6 +59,8 @@ $(document).ready( function () {
             <td>{{stand.age}}</td>
             <td>{{stand.mischungsgrad}}</td>
             <td>{{stand.get_entwicklungsstufe_display}}</td>
+            <td>{{stand.creator}}</td>
+            <td>{{stand.created_at|date:"d.m.Y | H:i"}}</td>
           </tr>
         {% endfor %}
         </tbody>

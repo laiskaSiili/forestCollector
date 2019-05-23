@@ -4,7 +4,7 @@ from .models import StandInformation, CustomUser
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 
 class StandInformationAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['creator', 'created_at']
 
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
