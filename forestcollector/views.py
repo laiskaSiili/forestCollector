@@ -22,10 +22,10 @@ def forest_collector(request):
         elif request.method == "GET":
             form = StandInformationForm()
             context["form"] = form
-        return render(request, 'forestcollector/include/forestcollectorform.html', context)
+        return render(request, 'forestcollector/forestcollectorform.html', context)
     else:
         context["stands"] = StandInformation.objects.all()
-        return render(request, 'forestcollector/include/forestcollectorsupervisor.html', context)
+        return render(request, 'forestcollector/forestcollectorsupervisor.html', context)
 
 
 ########################

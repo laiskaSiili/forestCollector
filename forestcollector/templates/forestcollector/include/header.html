@@ -1,0 +1,7 @@
+<div class="row bg-dark">
+    <div class="col">
+        <img src="{{MEDIA_URL}}logo.png" alt="ein logo" width="50px">
+        <span class="text-white">Welcome {{user.username}}!</span>
+        <a class="float-right" href="{% url 'logout' %}">Log out</a>
+    </div>
+</div>

@@ -107,13 +107,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_ROOT= os.path.join(BASE_DIR, '/static')
+STATIC_ROOT= os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
 ##############
 # MEDIA UPLOAD
 ##############
-MEDIA_ROOT= os.path.join(BASE_DIR, '/media')
+MEDIA_ROOT= os.path.join(BASE_DIR, 'media')
 MEDIA_URL= '/media/'
 
 ########################
@@ -131,3 +131,5 @@ INTERNAL_IPS = ['127.0.0.1']
 #######
 AUTH_USER_MODEL = 'forestcollector.CustomUser'
 LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'forrestcollector'
+LOGOUT_REDIRECT_URL = 'login'

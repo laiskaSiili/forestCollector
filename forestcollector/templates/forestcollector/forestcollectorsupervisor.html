@@ -6,18 +6,32 @@
 {% block title %}Forest Collector{% endblock %}
 
 {% block css %}
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 {% endblock %}
 
 {% block js %}
+<script
+  src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+  integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+  crossorigin="anonymous"></script>
+<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script>
+$(document).ready( function () {
+    $('#standTable').DataTable({
+      "columns": [
+        { "width": "5%" },
+        { "width": "20%" },
+        { "width": "20%" },
+        { "width": "20%" },
+      ]
+    });
+} );
+</script>
 {% endblock %}
 
 
 {% block content %}
-<div class="row bg-dark">
-    <div class="col">
-        <p class="text-white">Welcome {{user.username}}!</p>
-    </div>
-</div>
+{% include 'forestcollector/include/header.html' %}
 <div class="row">
     <div class="col">
         <h3 id='titel'>All entries</h3>
@@ -25,7 +39,7 @@
 </div>
 
 <div>
-    <table class="table table-success table-striped table-hover">
+    <table id="standTable" class="table table-success table-hover text-center">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -40,7 +54,7 @@
             <th scope="row">{{ forloop.counter }}</th>
             <td>{{stand.age}}</td>
             <td>{{stand.mischungsgrad}}</td>
-            <td>{{stand.entwicklungsstufe}}</td>
+            <td>{{stand.get_entwicklungsstufe_display}}</td>
           </tr>
         {% endfor %}
         </tbody>
