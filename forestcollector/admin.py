@@ -10,7 +10,15 @@ class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser
-    list_display = ['email', 'username', 'is_collector']
+    list_editable = ['username', 'email', 'is_collector']
+    list_display = ['username', 'email', 'is_collector']
+    list_display_links = None
+    list_filter = []
+    fieldsets = (
+        (None, {
+            'fields': ('username', 'email', 'is_collector')
+        }),
+    )
 
 admin.site.register(StandInformation, StandInformationAdmin)
 admin.site.register(CustomUser, CustomUserAdmin)
