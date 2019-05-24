@@ -6,7 +6,8 @@
 {% block title %}Forest Collector{% endblock %}
 
 {% block css %}
-<link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'forestcollector/css/supervisor.css' %}">
 {% endblock %}
 
 {% block js %}
@@ -14,10 +15,12 @@
   src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
   integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
   crossorigin="anonymous"></script>
-<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 <script>
 $(document).ready( function () {
     $('#standTable').DataTable({
+      responsive: true,
       "columns": [
         { "width": "5%" },
         { "width": "15%" },
@@ -27,6 +30,15 @@ $(document).ready( function () {
         { "width": "15%" },
       ]
     });
+
+    // When datatable is loaded, fade out spinner container by adding class fadeout defined in supervisor.css.
+    // After 1 second when fadeout has finished, completely remove spinner container from page by adding display: none (d-none).
+    let spinner = document.getElementById('spinner');
+    spinner.classList.add('fadeout');
+    setTimeout(function() {
+      spinner.classList.remove('d-flex');
+      spinner.classList.add('d-none');
+    }, 1000);
 } );
 </script>
 {% endblock %}
@@ -34,6 +46,14 @@ $(document).ready( function () {
 
 {% block content %}
 {% include 'forestcollector/include/header.html' %}
+
+<div id="spinner" class="spinner-container bg-dark d-flex align-items-center justify-content-center">
+  <div class="text-center">
+      <div class="spinner d-block mb-3"></div>
+      <h5 class="text-white">Preparing data...</h5>
+  </div>
+</div>
+
 <div class="row">
     <div class="col">
         <h3 id='titel'>All entries</h3>
