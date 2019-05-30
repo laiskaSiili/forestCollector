@@ -23,6 +23,20 @@
     opacity: 0;
 }
 
+/* table row hightlight */
+tr {
+    -webkit-transition: box-shadow 0.5s; 
+    -moz-transition: box-shadow 0.5s; 
+    transition: box-shadow 0.5s; 
+}
+
+.highlight {
+  -webkit-box-shadow: 5px 5px 6px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 5px 5px 6px 0px rgba(0,0,0,0.75);
+  box-shadow: 5px 5px 6px 0px rgba(0,0,0,0.75);
+  font-weight: bold;
+}
+
 /*
 spinner animation from:
 https://tobiasahlin.com/spinkit/

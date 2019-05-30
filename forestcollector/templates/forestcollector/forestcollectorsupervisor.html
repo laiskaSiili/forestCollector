@@ -87,7 +87,7 @@ $(document).ready( function () {
         </thead>
         <tbody>
         {% for stand in stands %}  
-          <tr>                      
+          <tr id="stand_{{ forloop.counter }}" class='latlng' data-lat='{{stand.lat}}' data-lon='{{stand.lon}}' data-popup='Stand {{ forloop.counter }} (by {{stand.creator}} on {{stand.created_at|date:"d.m.Y | H:i"}})'>                      
             <th scope="row">{{ forloop.counter }}</th>
             <td>{{stand.age}}</td>
             <td>{{stand.mischungsgrad}}</td>
