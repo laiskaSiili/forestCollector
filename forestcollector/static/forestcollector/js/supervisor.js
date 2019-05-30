@@ -38,7 +38,7 @@ map.fitBounds(group.getBounds().pad(0.5));
  ------------- */
 
 // on table row click, highlight row and open marker popup
-Array.from(document.getElementsByTagName('tr')).forEach(function(row) {
+Array.from(document.getElementsByClassName('latlng')).forEach(function(row) {
     row.addEventListener('click', highlightOnRowClick)
 });
 
